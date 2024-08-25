@@ -1,0 +1,31 @@
+
+services:
+  sonarqube:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: sonarqube
+    environment:
+      - SONARQUBE_JDBC_URL=${SONARQUBE_JDBC_URL}
+      - SONARQUBE_JDBC_USERNAME=${SONARQUBE_JDBC_USERNAME}
+      - SONARQUBE_JDBC_PASSWORD=${SONARQUBE_JDBC_PASSWORD}
+      - SONARQUBE_JDBC_MAXPOOLSIZE=${SONARQUBE_JDBC_MAXPOOLSIZE}
+      - SONARQUBE_JDBC_MAXWAIT=${SONARQUBE_JDBC_MAXWAIT}
+      - SONARQUBE_JDBC_MAXLIFETIME=${SONARQUBE_JDBC_MAXLIFETIME}
+      - SONARQUBE_JDBC_MINIDLE=${SONARQUBE_JDBC_MINIDLE}
+      - PODSLEEP=${PODSLEEP}
+    ports:
+      - "9000:9000"
+    volumes:
+      - ../elysian_admin:/projects/elysian_admin
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9000/health || exit 1"]
+      interval: 1m
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+
+networks:
+  default:
+    name: sandbox_network
+    #external: true
