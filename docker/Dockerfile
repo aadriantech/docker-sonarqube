@@ -20,7 +20,7 @@ RUN chmod +x /scripts/container-entrypoint.sh
 RUN chmod +x /scripts/run_sonarqube_analysis.sh
 
 # Symlink the run_sonarqube_analysis.sh script to /usr/local/bin/analyze
-RUN ln -s /run_sonarqube_analysis.sh /usr/local/bin/analyze
+RUN ln -s /scripts/run_sonarqube_analysis.sh /usr/local/bin/analyze
 
 # Expose the necessary port
 EXPOSE 9000/tcp
